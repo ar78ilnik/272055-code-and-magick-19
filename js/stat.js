@@ -1,54 +1,92 @@
 'use strict';
+var MIN = 128;
+var MAX = 255;
 
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 var GAP = 10;
-var FONT_X = 130;
-var FONT_Y = 260;
+
+var POSITION_NAME_X = 130;
+var POSITION_NAME_Y = 260;
 var FONT_GAP = 100;
-var RECT_X = 130;
-var RECT_Y = 240;
+
+var POSITION_RECT_X = 100;
+var POSITION_RECT_Y = 240;
 var RECT_WIDTH = 40;
-var players = ['Вы', 'Кекс', 'Катя', 'Игорь'];
+var RECT_HEIGHT = -150;
 
-var renderCloud = function (ctx, x, y, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+// Функция рисования облака и тени
+var renderCloud = function (ctx) {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+  ctx.fillRect(CLOUD_X + GAP, CLOUD_Y + GAP, CLOUD_WIDTH + GAP, CLOUD_HEIGHT + GAP);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
+
+  ctx.fillStyle = '#000';
+  ctx.font = '16px PT Mono';
+  ctx.fillText('Ура вы победили!', 180, 40);
+  ctx.fillText('Список результатов:', 180, 56);
 };
 
-var renderTimes = function (gamers) {
-  var times = [];
-  for (var i = 0; i < gamers.length; i++) {
-    var h = Math.random();
-    times[i] += h;
-    console.log(times[i]);
+// Функция поиска случайного числа для отрисовки цвета столбца
+var color = function (min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+// Функция поиска максимального элемента массива
+var getMaxElement = function (arr) {
+  var maxElement = arr[0];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] > maxElement) {
+      maxElement = arr[i];
+    }
   }
-  return times;
+  return maxElement;
 };
 
-renderTimes(players);
+// Функция генерирования статистики
+window.renderStatistics = function (ctx, names, times) {
+  renderCloud(ctx);
 
-window.renderStatistics = function (ctx) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  var positionNameX = POSITION_NAME_X;
+  var positionNameY = POSITION_NAME_Y;
+  var positionRectX = POSITION_RECT_X;
 
-  ctx.fillStyle = '#000';
-  ctx.fillText('Ура, вы победили!', FONT_X, 40);
-  ctx.fillText('Список результатов:', FONT_X, 60);
+  //Функция поиска максимального элемента массива времен
+  var maxTime = getMaxElement(times);
+  maxTime = Math.floor(maxTime);
 
-  ctx.fillText('Вы', FONT_X, FONT_Y);
-  ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  ctx.fillRect(RECT_X, RECT_Y, RECT_WIDTH, -150);
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillText(names[i], positionNameX, positionNameY);
+    ctx.fillText(Math.round(times[i]), positionNameX, positionNameY + times[i]);
 
-  ctx.fillStyle = '#000';
-  ctx.fillText('Кекс', FONT_X + FONT_GAP, FONT_Y);
-  ctx.fillRect(RECT_X + FONT_GAP, RECT_Y, RECT_WIDTH, -150);
+    if (names[i] === 'Вы') {
+      ctx.fillStyle = 'rgb(255, 0, 0)';
+      POSITION_NAME_X = 130;
+      POSITION_NAME_Y = 260;
+    } else {
+      ctx.fillStyle = 'rgb(0, 0,' + color(MIN, MAX) + ')';
+    }
 
-  ctx.fillText('Катя', FONT_X + FONT_GAP * 2, FONT_Y);
-  ctx.fillRect(RECT_X + FONT_GAP * 2, RECT_Y, RECT_WIDTH, -150);
+    ctx.fillText(names[i], positionNameX += 80, positionNameY);
+    ctx.fillRect(positionRectX += 80, POSITION_RECT_Y, 40, ((RECT_HEIGHT * times[i]) / maxTime));
+    ctx.fillStyle = 'black';
 
-  ctx.fillText('Игорь', FONT_X + FONT_GAP * 3, FONT_Y);
-  ctx.fillRect(RECT_X + FONT_GAP * 3, RECT_Y, RECT_WIDTH, -150);
+    /*ctx.fillText('Вы', POSITION_NAME_X, POSITION_NAME_Y);
+    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    ctx.fillRect(POSITION_RECT_X, POSITION_RECT_Y, RECT_WIDTH, -150);
+
+    ctx.fillStyle = '#000';
+    ctx.fillText('Кекс', POSITION_NAME_X + FONT_GAP, POSITION_NAME_Y);
+    ctx.fillRect(POSITION_RECT_X + FONT_GAP, POSITION_RECT_Y, RECT_WIDTH, -150);
+
+    ctx.fillText('Катя', POSITION_NAME_X + FONT_GAP * 2, POSITION_NAME_Y);
+    ctx.fillRect(POSITION_RECT_X + FONT_GAP * 2, POSITION_RECT_Y, RECT_WIDTH, -150);
+
+    ctx.fillText('Игорь', POSITION_NAME_X + FONT_GAP * 3, POSITION_NAME_Y);
+    ctx.fillRect(POSITION_RECT_X + FONT_GAP * 3, POSITION_RECT_Y, RECT_WIDTH, -150);
+  }*/
+  }
 };
