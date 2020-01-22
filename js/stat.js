@@ -10,14 +10,11 @@ var GAP = 10;
 
 var POSITION_NAME_X = 100;
 var POSITION_NAME_Y = 260;
-var FONT_GAP = 100;
 
 var POSITION_TIME_X = POSITION_NAME_X;
-var POSITION_TIME_Y = POSITION_NAME_Y;
 
 var POSITION_RECT_X = 100;
 var POSITION_RECT_Y = 240;
-var RECT_WIDTH = 40;
 var RECT_HEIGHT = -150;
 
 var STAT_GAP = 40;
@@ -58,20 +55,19 @@ window.renderStatistics = function (ctx, names, times) {
   var positionNameX = POSITION_NAME_X;
   var positionNameY = POSITION_NAME_Y;
   var positionTimeX = POSITION_TIME_X;
-  var positionTimeY = POSITION_TIME_Y;
   var positionRectX = POSITION_RECT_X;
 
-  //Функция поиска максимального элемента массива времен
+  // Функция поиска максимального элемента массива времен
   var maxTime = getMaxElement(times);
   maxTime = Math.floor(maxTime);
 
-  //Округления времен
+  // Округления времен
   for (var i = 0; i < times.length; i++) {
     times[i] = Math.floor(times[i]);
   }
 
   // Цикл вывода статистики
-  for (var i = 0; i < names.length; i++) {
+  for (i = 0; i < names.length; i++) {
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgb(255, 0, 0)';
       POSITION_NAME_X = 130;
