@@ -106,8 +106,10 @@ var setupPlayer = setup.querySelector('.setup-player');
 var wizardCoat = setupPlayer.querySelector('.wizard-coat');
 var wizardEyes = setupPlayer.querySelector('.wizard-eyes');
 var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
+var wizardFireballInput = wizardFireball.querySelector('input');
 
 wizardCoat.addEventListener('click', function (evt) {
+  evt.target.removeAttribute('style');
   evt.target.setAttribute('style', 'fill:' + getRandomValues(COAT_COLOR));
 });
 
@@ -116,7 +118,9 @@ wizardEyes.addEventListener('click', function (evt) {
 });
 
 wizardFireball.addEventListener('click', function (evt) {
-  evt.target.setAttribute('style', 'fill:' + getRandomValues(FIREBALL_COLOR));
+  var fireballColor = getRandomValues(FIREBALL_COLOR);
+  wizardFireball.setAttribute('style', 'background:' + fireballColor);
+  wizardFireballInput.setAttribute('value', fireballColor);
 });
 
 var onPopupEscPress = function (evt) {
