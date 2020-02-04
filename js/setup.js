@@ -109,7 +109,7 @@ var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
 var wizardFireballInput = wizardFireball.querySelector('input');
 
 wizardCoat.addEventListener('click', function (evt) {
-  evt.target.setAttribute('style', 'fill:' + getRandomValues(COAT_COLOR));
+  evt.target.setAttribute('style', 'fill: ' + getRandomValues(COAT_COLOR));
 });
 
 wizardEyes.addEventListener('click', function (evt) {
