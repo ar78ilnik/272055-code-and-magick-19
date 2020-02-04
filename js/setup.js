@@ -20,22 +20,22 @@ var SURNAMES = [
   'Нионго',
   'Ирвинг'
 ];
-var COAT_COLOR = [
-  'rgb (101, 137, 164)',
-  'rgb (241, 43, 107)',
-  'rgb (146, 100, 161)',
-  'rgb (56, 159, 117)',
-  'rgb (215, 210, 55)',
-  'rgb (0, 0, 0)'
+var COAT_COLORS = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
 ];
-var EYES_COLOR = [
+var EYES_COLORS = [
   'black',
   'red',
   'blue',
   'yellow',
   'green'
 ];
-var FIREBALL_COLOR = [
+var FIREBALL_COLORS = [
   '#ee4830',
   '#30a8ee',
   '#5ce6c0',
@@ -62,8 +62,8 @@ var createWizards = function (wizardCount) {
   for (var i = 0; i < wizardCount; i++) {
     var wizard = {
       name: getRandomValues(NAMES) + ' ' + getRandomValues(SURNAMES),
-      coatColor: getRandomValues(COAT_COLOR),
-      eyesColor: getRandomValues(EYES_COLOR)
+      coatColor: getRandomValues(COAT_COLORS),
+      eyesColor: getRandomValues(EYES_COLORS)
     };
     wizards.push(wizard);
   }
@@ -109,15 +109,15 @@ var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
 var wizardFireballInput = wizardFireball.querySelector('input');
 
 wizardCoat.addEventListener('click', function (evt) {
-  evt.target.setAttribute('style', 'fill: ' + getRandomValues(COAT_COLOR));
+  evt.target.setAttribute('style', 'fill: ' + getRandomValues(COAT_COLORS));
 });
 
 wizardEyes.addEventListener('click', function (evt) {
-  evt.target.setAttribute('style', 'fill:' + getRandomValues(EYES_COLOR));
+  evt.target.setAttribute('style', 'fill:' + getRandomValues(EYES_COLORS));
 });
 
 wizardFireball.addEventListener('click', function () {
-  var fireballColor = getRandomValues(FIREBALL_COLOR);
+  var fireballColor = getRandomValues(FIREBALL_COLORS);
   wizardFireball.setAttribute('style', 'background:' + fireballColor);
   wizardFireballInput.setAttribute('value', fireballColor);
 });
